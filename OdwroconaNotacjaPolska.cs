@@ -90,48 +90,48 @@ namespace Prog2
                 }
                 else if (Regex.IsMatch(postfix[i], @"^[-]((abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan))|((abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan))"))
                 {
-                    double temp;
-                    temp = (System.Convert.ToDouble(s.Pop()));
+                    double x;
+                    x = (System.Convert.ToDouble(s.Pop()));
                     switch (postfix[i])
                     {
                         case "abs":
-                            s.Push(Math.Abs(temp).ToString());
+                            s.Push(Math.Abs(x).ToString());
                             break;
                         case "cos":
-                            s.Push(Math.Cos(temp).ToString());
+                            s.Push(Math.Cos(x).ToString());
                             break;
                         case "exp":
-                            s.Push(Math.Exp(temp).ToString());
+                            s.Push(Math.Exp(x).ToString());
                             break;
                         case "log":
-                            s.Push(Math.Log(temp).ToString());
+                            s.Push(Math.Log(x).ToString());
                             break;
                         case "sin":
-                            s.Push(Math.Sin(temp).ToString());
+                            s.Push(Math.Sin(x).ToString());
                             break;
                         case "sqrt":
-                            s.Push(Math.Sqrt(temp).ToString());
+                            s.Push(Math.Sqrt(x).ToString());
                             break;
                         case "tan":
-                            s.Push(Math.Tan(temp).ToString());
+                            s.Push(Math.Tan(x).ToString());
                             break;
                         case "cosh":
-                            s.Push(Math.Cosh(temp).ToString());
+                            s.Push(Math.Cosh(x).ToString());
                             break;
                         case "sinh":
-                            s.Push(Math.Sinh(temp).ToString());
+                            s.Push(Math.Sinh(x).ToString());
                             break;
                         case "tanh":
-                            s.Push(Math.Tanh(temp).ToString());
+                            s.Push(Math.Tanh(x).ToString());
                             break;
                         case "acos":
-                            s.Push(Math.Acos(temp).ToString());
+                            s.Push(Math.Acos(x).ToString());
                             break;
                         case "asin":
-                            s.Push(Math.Asin(temp).ToString());
+                            s.Push(Math.Asin(x).ToString());
                             break;
                         case "atan":
-                            s.Push(Math.Atan(temp).ToString());
+                            s.Push(Math.Atan(x).ToString());
                             break;
                     }
                 }
@@ -162,6 +162,19 @@ namespace Prog2
             }
             wynik = Convert.ToDouble(s.Pop());
             return wynik;
+        }
+        public double[,] ONP_postfix_przedzial(string[] postfix, double from, double to, int ilosc)
+        {
+            double[,] wyniki = new double[2, ilosc];
+            double dod = (to - from) / (ilosc - 1);
+            X = from;
+            for (int i = 0; i < ilosc; i++)
+            {
+                wyniki[0, i] = X;
+                wyniki[1, i] = ONP_postfix_oblicz(postfix);
+                X += dod;
+            }
+            return wyniki;
         }
         public int Priorytet(string token)
         {
