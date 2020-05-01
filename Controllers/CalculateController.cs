@@ -19,11 +19,19 @@ namespace Prog2.Controllers
             OdwroconaNotacjaPolska test = new OdwroconaNotacjaPolska(formula);
             if (x.ToString() != null)
             {
-                test.X = x;
-                string[] tokeny = test.Tokeny();
-                string[] postfix = test.ONP_postfix(tokeny);
-                double wynik = test.ONP_postfix_oblicz(postfix);
-                return Ok(new OkResponse<double>(wynik));
+                try
+                {
+                    test.X = x;
+                    string[] tokeny = test.Tokeny();
+                    if (!test.Walidacja(tokeny)) throw new Exception("Niepoprawna formuła");
+                    string[] postfix = test.ONP_postfix(tokeny);
+                    double wynik = test.ONP_postfix_oblicz(postfix);
+                    return Ok(new OkResponse<double>(wynik));
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new ErrorResponse(e));
+                }
             }
             else
             {
@@ -38,11 +46,12 @@ namespace Prog2.Controllers
             OdwroconaNotacjaPolska test = new OdwroconaNotacjaPolska(formula);
             if (from.ToString() != null || to.ToString() != null || n.ToString() != null)
             {
-                test.X = Convert.ToDouble(n);
-                string[] tokeny = test.Tokeny();
-                string[] postfix = test.ONP_postfix(tokeny);
                 try
                 {
+                    test.X = Convert.ToDouble(n);
+                    string[] tokeny = test.Tokeny();
+                    if (!test.Walidacja(tokeny)) throw new Exception("Niepoprawna formuła");
+                    string[] postfix = test.ONP_postfix(tokeny);
                     List<Punkty> wyniki = test.ONP_postfix_przedzial(postfix, from, to, n);
                     return Ok(new OkResponse<List<Punkty>>(wyniki));
                 }

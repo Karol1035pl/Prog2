@@ -16,14 +16,22 @@ namespace Prog2.Controllers
         [HttpGet]
         public IActionResult Get(string formula)
         {
-            OdwroconaNotacjaPolska test = new OdwroconaNotacjaPolska(formula);
-            string[] tokeny = test.Tokeny();
-            var wynik = new
+            try
             {
-                infix = tokeny,
-                postfix = test.ONP_postfix(tokeny)
-            };
-            return Ok(new OkResponse<object>(wynik));
+                OdwroconaNotacjaPolska test = new OdwroconaNotacjaPolska(formula);
+                string[] tokeny = test.Tokeny();
+                if (!test.Walidacja(tokeny)) throw new Exception("Niepoprawna formuła");
+                var wynik = new
+                {
+                    infix = tokeny,
+                    postfix = test.ONP_postfix(tokeny)
+                };
+                return Ok(new OkResponse<object>(wynik));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ErrorResponse(e));
+            }
         }
     }
 }

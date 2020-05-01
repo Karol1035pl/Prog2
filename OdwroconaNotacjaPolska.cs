@@ -15,6 +15,43 @@ namespace Prog2
             formula = formula.ToLower();
             Formula = formula;
         }
+
+        public bool Walidacja(string[] tokeny)
+        {
+            int liczbaNawiasow = 0;
+            if (Regex.IsMatch(tokeny[tokeny.Length - 1], @"[\-\+\/\*\^]")) return false;
+            for (int i = 0; i < tokeny.Length; i++)
+            {
+                if (tokeny[i] == "(")
+                {
+                    liczbaNawiasow++;
+                }
+                else if (tokeny[i] == ")")
+                {
+                    if (liczbaNawiasow <= 0) return false;
+                    liczbaNawiasow--;
+                }
+                if (!Regex.IsMatch(tokeny[i], @"[a-zA-Z\d\(\)]|[\-\+\/\*\^]") || (tokeny[i] != "x" && Regex.IsMatch(tokeny[i], @"^[a-zA-Z]") && !Regex.IsMatch(tokeny[i], @"(abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan)")))
+                {
+                    return false;
+                }
+                if (i != 0 && Regex.IsMatch(tokeny[i], @"[\-\+\/\*\^]") && Regex.IsMatch(tokeny[i - 1], @"[\-\+\/\*\^]"))
+                {
+                    return false;
+                }
+                if (Regex.IsMatch(tokeny[i], @"\d+"))
+                {
+                    if (i != 0)
+                    {
+                        if (!(Regex.IsMatch(tokeny[i - 1], @"([(]|[\-\+\/\*\^]|(abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan))"))) return false;
+                        if (tokeny[i] == "0")
+                            if (tokeny[i - 1] == "/") throw new Exception("Nie można dzielić przez 0");
+                    }
+                }
+            }
+            if (liczbaNawiasow != 0) return false;
+            return true;
+        }
         public string[] Tokeny()
         {
             Formula = Regex.Replace(Formula, @"(?<num>\d+(\.\d+)?)", " ${num} ");
