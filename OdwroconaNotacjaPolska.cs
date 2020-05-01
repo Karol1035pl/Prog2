@@ -91,7 +91,7 @@ namespace Prog2
                 else if (Regex.IsMatch(postfix[i], @"^[-]((abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan))|((abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan))"))
                 {
                     double x;
-                    x = (System.Convert.ToDouble(s.Pop()));
+                    x = Convert.ToDouble(s.Pop(), System.Globalization.CultureInfo.InvariantCulture);
                     switch (postfix[i])
                     {
                         case "abs":
@@ -138,8 +138,8 @@ namespace Prog2
                 else if (Regex.IsMatch(postfix[i], @"[\-\+\/\*\^]"))
                 {
                     double a, b;
-                    a = Convert.ToDouble(s.Pop());
-                    b = Convert.ToDouble(s.Pop());
+                    a = Convert.ToDouble(s.Pop(), System.Globalization.CultureInfo.InvariantCulture);
+                    b = Convert.ToDouble(s.Pop(), System.Globalization.CultureInfo.InvariantCulture);
                     switch (postfix[i])
                     {
                         case "+":
@@ -161,17 +161,19 @@ namespace Prog2
                 }
             }
             wynik = Convert.ToDouble(s.Pop());
+            if (double.IsNaN(wynik)) throw new NullReferenceException("Błąd przedziału");
             return wynik;
         }
-        public double[,] ONP_postfix_przedzial(string[] postfix, double from, double to, int ilosc)
+        public List<Punkty> ONP_postfix_przedzial(string[] postfix, double from, double to, int ilosc)
         {
-            double[,] wyniki = new double[2, ilosc];
+            List<Punkty> wyniki = new List<Punkty>();
+            double wynik;
             double dod = (to - from) / (ilosc - 1);
             X = from;
             for (int i = 0; i < ilosc; i++)
             {
-                wyniki[0, i] = X;
-                wyniki[1, i] = ONP_postfix_oblicz(postfix);
+                wynik = ONP_postfix_oblicz(postfix);
+                wyniki.Add(new Punkty(X, wynik));
                 X += dod;
             }
             return wyniki;
@@ -183,6 +185,17 @@ namespace Prog2
             else if (token == "*" || token == "/") return 2;
             else if (token == "+" || token == "-") return 1;
             else return 0;
+        }
+    }
+    public class Punkty
+    {
+        public double x { get; set; }
+        public double y { get; set; }
+
+        public Punkty(double X, double Y)
+        {
+            x = X;
+            y = Y;
         }
     }
 }

@@ -11,3 +11,10 @@ C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.AssemblyInfo.cs
 C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.dll
 C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.pdb
 C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.genruntimeconfig.cache
+C:\Users\Karol\Desktop\Prog2\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Karol\Desktop\Prog2\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\Karol\Desktop\Prog2\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\Prog2.RazorTargetAssemblyInfo.cache
+C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\staticwebassets\Prog2.StaticWebAssets.Manifest.cache
+C:\Users\Karol\Desktop\Prog2\obj\Debug\netcoreapp3.1\staticwebassets\Prog2.StaticWebAssets.xml
